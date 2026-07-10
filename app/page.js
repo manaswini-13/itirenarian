@@ -156,13 +156,7 @@ export default function App() {
   );
 }
 
-function Landing({
-  onGenerate,
-  loading,
-  loadingLetter,
-  loadingProgress,
-  destination: loadingDest,
-}) {
+function Landing({ onGenerate, loading, loadingLetter, loadingProgress }) {
   const [destination, setDestination] = useState("Jaipur");
   const [days, setDays] = useState(4);
   const [budget, setBudget] = useState(45000);
@@ -181,32 +175,30 @@ function Landing({
 
   if (loading) {
     return (
-      <div className="min-h-screen w-full flex flex-col items-center justify-center relative bg-[#f2e6c8] px-6">
+      <div className="min-h-screen w-full flex flex-col items-center justify-center relative parchment-noise">
+        <div className="absolute inset-0 parchment-overlay pointer-events-none" />
         <div className="relative z-10 flex flex-col items-center">
-          <p className="font-display text-sm tracking-[0.4em] uppercase text-[#0f4c3a] mb-2">
+          <p className="font-display text-sm tracking-[0.4em] uppercase text-[color:var(--jewel-emerald)] mb-2">
             Illuminating
           </p>
-          <h2 className="font-serif text-2xl md:text-3xl italic text-[#2a1a0a] mb-10 text-center max-w-xl">
-            Composing your journey through {loadingDest || destination}…
+          <h2 className="font-italic-body text-3xl md:text-4xl text-[color:var(--ink)] mb-10">
+            Composing your journey through {destination}…
           </h2>
           <div
-            className="font-gothic text-8xl relative z-10 text-transparent bg-clip-text bg-gradient-to-t from-[#7a5a12] to-[#c9a54a]"
-            style={{
-              minHeight: "120px",
-              display: "flex",
-              alignItems: "center",
-            }}
+            className="illumination-cap animate-gold-glow"
+            data-letter={loadingLetter}
+            style={{ "--fill": `${100 - loadingProgress}%` }}
           >
             {loadingLetter}
           </div>
-          <div className="mt-8 h-[3px] w-72 bg-[#7a5a12]/20 rounded-full overflow-hidden">
+          <div className="mt-8 h-[3px] w-72 bg-[color:var(--gold-deep)]/40 rounded-full overflow-hidden">
             <div
               className="h-full bg-gradient-to-r from-[#7a5a12] via-[#f5d97a] to-[#c9a54a]"
               style={{ width: `${loadingProgress}%` }}
             />
           </div>
-          <p className="mt-4 font-display text-[10px] tracking-[0.5em] uppercase text-[#7a5a12]">
-            Golden light fills the letter… {loadingProgress}%
+          <p className="mt-4 font-display text-[10px] tracking-[0.5em] uppercase text-[color:var(--gold-deep)]">
+            Golden light fills the letter…
           </p>
         </div>
       </div>
@@ -214,28 +206,26 @@ function Landing({
   }
 
   return (
-    <div
-      className="min-h-screen w-full flex flex-col items-center justify-center relative px-6"
-      style={{ backgroundColor: "#f2e6c8" }}
-    >
+    <div className="min-h-screen w-full flex flex-col items-center justify-center relative parchment-noise px-6">
+      <div className="absolute inset-0 parchment-overlay pointer-events-none" />
       <div className="relative z-10 flex items-center gap-3 mb-4">
-        <div className="h-px w-24 bg-[#7a5a12]" />
-        <Sparkles className="h-4 w-4 text-[#7a5a12]" />
-        <div className="h-px w-24 bg-[#7a5a12]" />
+        <div className="h-px w-24 bg-[color:var(--gold-deep)]" />
+        <Sparkles className="h-4 w-4 text-[color:var(--gold-deep)]" />
+        <div className="h-px w-24 bg-[color:var(--gold-deep)]" />
       </div>
-      <h1 className="relative z-10 font-gothic text-6xl md:text-8xl text-[#7a5a12] drop-shadow-sm select-none">
+      <h1 className="relative z-10 font-gothic text-6xl md:text-8xl gold-text drop-shadow-sm select-none">
         Itinerian
       </h1>
-      <p className="relative z-10 font-serif text-lg md:text-2xl italic text-[#2a1a0a]/80 mt-2 mb-10">
+      <p className="relative z-10 font-italic-body text-lg md:text-2xl text-[color:var(--ink)]/80 mt-2 mb-10">
         Illuminated itineraries, hand-crafted by artificial muses.
       </p>
       <form
         onSubmit={submit}
-        className="relative z-10 w-full max-w-2xl bg-[#faf4e8]/80 backdrop-blur-sm border border-[#7a5a12]/40 rounded-sm p-8 shadow-[0_20px_60px_-20px_rgba(60,40,15,0.5)]"
+        className="relative z-10 w-full max-w-2xl bg-[color:var(--parchment)]/70 backdrop-blur-sm border border-[color:var(--gold-deep)]/40 rounded-sm p-8 shadow-[0_20px_60px_-20px_rgba(60,40,15,0.5)]"
       >
         <div className="grid gap-6">
           <label className="block">
-            <span className="font-display text-[11px] tracking-[0.35em] uppercase text-[#0f4c3a]">
+            <span className="font-display text-[11px] tracking-[0.35em] uppercase text-[color:var(--jewel-emerald)]">
               Destination
             </span>
             <input
@@ -243,13 +233,13 @@ function Landing({
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
               placeholder="Jaipur, Rome, Kyoto…"
-              className="mt-2 w-full bg-transparent border-b-2 border-[#7a5a12]/60 focus:border-[#6e1f2a] outline-none py-2 text-2xl font-serif text-[#2a1a0a]"
+              className="mt-2 w-full bg-transparent border-b-2 border-[color:var(--gold-deep)]/60 focus:border-[color:var(--jewel-ruby)] outline-none py-2 text-2xl font-italic-body text-[color:var(--ink)]"
               required
             />
           </label>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <label className="block">
-              <span className="font-display text-[11px] tracking-[0.35em] uppercase text-[#0f4c3a]">
+              <span className="font-display text-[11px] tracking-[0.35em] uppercase text-[color:var(--jewel-emerald)]">
                 Days
               </span>
               <input
@@ -258,12 +248,12 @@ function Landing({
                 max={14}
                 value={days}
                 onChange={(e) => setDays(e.target.value)}
-                className="mt-2 w-full bg-transparent border-b-2 border-[#7a5a12]/60 focus:border-[#6e1f2a] outline-none py-2 text-2xl font-serif text-[#2a1a0a]"
+                className="mt-2 w-full bg-transparent border-b-2 border-[color:var(--gold-deep)]/60 focus:border-[color:var(--jewel-ruby)] outline-none py-2 text-2xl font-italic-body text-[color:var(--ink)]"
                 required
               />
             </label>
             <label className="block">
-              <span className="font-display text-[11px] tracking-[0.35em] uppercase text-[#0f4c3a]">
+              <span className="font-display text-[11px] tracking-[0.35em] uppercase text-[color:var(--jewel-emerald)]">
                 Budget ( ₹ )
               </span>
               <input
@@ -272,19 +262,19 @@ function Landing({
                 step={1000}
                 value={budget}
                 onChange={(e) => setBudget(e.target.value)}
-                className="mt-2 w-full bg-transparent border-b-2 border-[#7a5a12]/60 focus:border-[#6e1f2a] outline-none py-2 text-2xl font-serif text-[#2a1a0a]"
+                className="mt-2 w-full bg-transparent border-b-2 border-[color:var(--gold-deep)]/60 focus:border-[color:var(--jewel-ruby)] outline-none py-2 text-2xl font-italic-body text-[color:var(--ink)]"
                 required
               />
             </label>
           </div>
           <label className="block">
-            <span className="font-display text-[11px] tracking-[0.35em] uppercase text-[#0f4c3a]">
+            <span className="font-display text-[11px] tracking-[0.35em] uppercase text-[color:var(--jewel-emerald)]">
               Travel Vibe
             </span>
             <select
               value={vibe}
               onChange={(e) => setVibe(e.target.value)}
-              className="mt-2 w-full bg-[#faf4e8] border-b-2 border-[#7a5a12]/60 focus:border-[#6e1f2a] outline-none py-2 text-2xl font-serif text-[#2a1a0a]"
+              className="mt-2 w-full bg-transparent border-b-2 border-[color:var(--gold-deep)]/60 focus:border-[color:var(--jewel-ruby)] outline-none py-2 text-2xl font-italic-body text-[color:var(--ink)]"
               required
             >
               {VIBES.map((v) => (
@@ -297,7 +287,7 @@ function Landing({
         </div>
         <button
           type="submit"
-          className="group mt-8 w-full flex items-center justify-center gap-3 py-4 bg-[#0f4c3a] hover:bg-[#6e1f2a] transition-colors text-[#faf4e8] font-display tracking-[0.35em] uppercase text-sm rounded-sm shadow-[inset_0_0_0_1px_rgba(245,217,122,0.5)]"
+          className="group mt-8 w-full flex items-center justify-center gap-3 py-4 bg-[color:var(--jewel-emerald)] hover:bg-[color:var(--jewel-ruby)] transition-colors text-[color:var(--parchment)] font-display tracking-[0.35em] uppercase text-sm rounded-sm shadow-[inset_0_0_0_1px_rgba(245,217,122,0.5)]"
         >
           <Compass className="h-4 w-4 group-hover:rotate-45 transition-transform" />
           Generate Itinerary
@@ -307,6 +297,7 @@ function Landing({
     </div>
   );
 }
+
 
 function Results({ itin, onBack }) {
   const containerRef = useRef(null);
